@@ -1,0 +1,3 @@
+*.pyc
+glusterlog.egg-info
+dist
