@@ -8,6 +8,7 @@
 gluster-log-colorize: To colorize the log lines
 
     cat /var/log/glusterfs/glusterd.log | gluster-log-colorize
+    tail /var/log/glusterfs/glusterd.log | gluster-log-colorize
     grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-colorize
 
 To colorize entire log file and then open using `less`
@@ -15,15 +16,60 @@ To colorize entire log file and then open using `less`
     cat /var/log/glusterfs/glusterd.log | gluster-log-colorize > /tmp/glusterd_color.log
     less -R /tmp/glusterd_color.log
 
+![Gluster Log With Color](./gluster-log-with-color.png)
+
 gluster-log-json: To convert log lines to json
 
-    grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-json
+    tail -2 /var/log/glusterfs/glusterd.log | gluster-log-json
+
+    {
+        "domain": "0-rpc-service",
+        "log_level": "E",
+        "known_format": true,
+        "fields": {},
+        "timestamp": "2017-10-10 09:26:08.243588",
+        "message": "portmap unregistration of program failed",
+        "msg_id": null,
+        "file_info": "rpcsvc.c:1566:rpcsvc_program_unregister"
+    }
+    {
+        "domain": "0-rpc-service",
+        "log_level": "E",
+        "known_format": true,
+        "fields": {},
+        "timestamp": "2017-10-10 09:26:08.243591",
+        "message": "Program unregistration failed: Gluster MGMT Handshake, Num: 1239873, Ver: 1, Port: 0",
+        "msg_id": null,
+        "file_info": "rpcsvc.c:1609:rpcsvc_program_unregister"
+    }
 
 Above command will convert every line as independent json object, if we want a
 single json file then use `--single-json`
 
-    grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-json --single-json > /tmp/glusterd_msgid_106143.json
+    tail -2 /var/log/glusterfs/glusterd.log | gluster-log-json --single-json > /tmp/glusterd.json
 
+    [
+    {
+        "domain": "0-rpc-service",
+        "log_level": "E",
+        "known_format": true,
+        "fields": {},
+        "timestamp": "2017-10-10 09:26:08.243588",
+        "message": "portmap unregistration of program failed",
+        "msg_id": null,
+        "file_info": "rpcsvc.c:1566:rpcsvc_program_unregister"
+    },
+    {
+        "domain": "0-rpc-service",
+        "log_level": "E",
+        "known_format": true,
+        "fields": {},
+        "timestamp": "2017-10-10 09:26:08.243591",
+        "message": "Program unregistration failed: Gluster MGMT Handshake, Num: 1239873, Ver: 1, Port: 0",
+        "msg_id": null,
+        "file_info": "rpcsvc.c:1609:rpcsvc_program_unregister"
+    }
+    ]
 
 ## Use as library
 

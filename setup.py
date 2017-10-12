@@ -1,16 +1,20 @@
-# -*- coding: utf-8 -*-
-"""
-    glusterlog.setup.py
-    :copyright: (c) 2017 by Aravinda VK
-    :license: MIT, see LICENSE for more details.
-"""
+#
+# Copyright (c) 2017 Red Hat, Inc.
+#
+# This file is part of gluster-health-report project which is a
+# subproject of GlusterFS ( www.gluster.org)
+#
+# This file is licensed to you under your choice of the GNU Lesser
+# General Public License, version 3 or any later version (LGPLv3 or
+# later), or the GNU General Public License, version 2 (GPLv2), in all
+# cases as published by the Free Software Foundation.
 
 from setuptools import setup
 
 
 setup(
     name="glusterlog",
-    version="0.1",
+    version="0.2",
     packages=["glusterlog"],
     include_package_data=True,
     install_requires=[],
@@ -23,9 +27,9 @@ setup(
     platforms="linux",
     zip_safe=False,
     author="Aravinda VK",
-    author_email="mail@aravindavk.in",
+    author_email="avishwan@redhat.com",
     description="Gluster Log parser",
-    license="MIT",
+    license="GPLv2",
     keywords="gluster, tool, logs",
     url="https://github.com/aravindavk/glusterlog",
     long_description="""
