@@ -14,6 +14,12 @@ setup(
     packages=["glusterlog"],
     include_package_data=True,
     install_requires=[],
+    entry_points={
+        "console_scripts": [
+            "gluster-log-colorize = glusterlog.colorize:main",
+            "gluster-log-json = glusterlog.tojson:main",
+        ]
+    },
     platforms="linux",
     zip_safe=False,
     author="Aravinda VK",

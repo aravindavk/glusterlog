@@ -21,7 +21,7 @@ class ParsedData(object):
         self.file_info = None
         self.domain = None
         self.message = None
-        self.fields = []
+        self.fields = {}
 
     def __str__(self):
         data = (
@@ -48,6 +48,23 @@ class ParsedData(object):
         data = data.strip(", ")
         return data
 
+    def json(self):
+        import json
+
+        return json.dumps(
+            {
+                "known_format": self.known_format,
+                "timestamp": self.ts,
+                "log_level": self.log_level,
+                "msg_id": self.msg_id,
+                "file_info": self.file_info,
+                "domain": self.domain,
+                "message": self.message,
+                "fields": self.fields
+            },
+            indent=4
+        )
+
 
 def parse(data):
     m = log_pattern.match(data)
@@ -66,8 +83,11 @@ def parse(data):
         out.fields = {}
         if (len(msg_parts) > 1):
             for i in range(1, len(msg_parts)):
-                key_value = msg_parts[i].split("=")
+                key_value = msg_parts[i].strip().split("=")
                 # If no value, then this will be same as key
-                out.fields[key_value[0]] = key_value[-1]
+                out.fields[key_value[0].strip()] = key_value[-1].strip()
+    else:
+        # No match, add raw message to message, known_format is False
+        out.message = data
 
     return out

@@ -5,6 +5,27 @@
     pip install glusterlog
 
 ## Usage
+gluster-log-colorize: To colorize the log lines
+
+    cat /var/log/glusterfs/glusterd.log | gluster-log-colorize
+    grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-colorize
+
+To colorize entire log file and then open using `less`
+
+    cat /var/log/glusterfs/glusterd.log | gluster-log-colorize > /tmp/glusterd_color.log
+    less -R /tmp/glusterd_color.log
+
+gluster-log-json: To convert log lines to json
+
+    grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-json
+
+Above command will convert every line as independent json object, if we want a
+single json file then use `--single-json`
+
+    grep "MSGID: 106143" /var/log/glusterfs/glusterd.log | gluster-log-json --single-json > /tmp/glusterd_msgid_106143.json
+
+
+## Use as library
 
     from glusterlog import parse
 
@@ -65,4 +86,3 @@ Example output:
     Brick                Number of Restarts
     /bricks/b1           2
     /bricks/b2           2
-
